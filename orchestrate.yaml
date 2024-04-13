@@ -1,0 +1,24 @@
+apiVersion: v1alpha
+kind: imagerunner
+sauce:
+  region: us-west-1
+suites:
+  - name: Python Mobile SO Edition
+    workload: webdriver
+    #resourceProfile: c6m6
+    image: sminch/tunnel-check:0.2.7
+    environment:
+      SAUCE_USERNAME: ${SAUCE_USERNAME}
+      SAUCE_ACCESS_KEY: ${SAUCE_ACCESS_KEY}
+      SAUCE_OUTPUT_FORMAT: "text"
+    # the command to run your tests
+    entrypoint: "pytest /opt/test_android.py"
+    artifacts:
+      - "/workdir/file.log"
+
+artifacts:
+  download:
+    when: always
+    match:
+      - "*"
+    directory: ./artifacts

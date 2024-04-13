@@ -1,3 +1,4 @@
 FROM python:latest
-WORKDIR /workdir
-RUN pip3 install pytest pytest-xdist selenium requests
+COPY . /opt
+ADD . /opt
+RUN pip3 install pytest pytest-xdist selenium requests Appium-Python-Client
