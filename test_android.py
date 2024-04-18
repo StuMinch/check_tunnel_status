@@ -1,17 +1,14 @@
 import os
+import pytest
 from appium import webdriver
 from appium.options.common import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
+from appium.webdriver.appium_service import AppiumService
 
 url = "https://ondemand.us-west-1.saucelabs.com:443/wd/hub"
 
-
-def check_version(capabilities):
-    driver = webdriver.Remote(url, options=AppiumOptions().load_capabilities(capabilities))
-    driver.get('https://android.com')
-    driver.quit()
-
-def test_chrome_version():
+@pytest.fixture(scope="module")
+def driver():
     capabilities = {}
     capabilities['appium:deviceName'] = 'Google.*'
     capabilities['platformName'] = 'Android'
@@ -21,7 +18,10 @@ def test_chrome_version():
     capabilities['sauce:options']['name'] = 'Android Chrome Test'
     capabilities['sauce:options']['username'] = os.environ.get("SAUCE_USERNAME")
     capabilities['sauce:options']['accessKey'] = os.environ.get("SAUCE_ACCESS_KEY")
-    check_version(capabilities)
+    driver = webdriver.Remote(url, options=AppiumOptions().load_capabilities(capabilities))
+    yield driver
+    driver.quit()
 
-test_chrome_version()
-
+def test_android(driver):
+    print(f"Sauce Session: https://app.saucelabs.com/tests/{driver.session_id}")
+    driver.get('https://android.com')
