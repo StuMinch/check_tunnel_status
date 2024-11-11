@@ -12,7 +12,7 @@ def check_tunnel(max_attempts=10):
             return True
 
 def chrome_test():
-    call(["python3", "test_chrome_latest.py"])
+    call(["python3", "test_magical_kingdom.py"])
 
 if check_tunnel():
     chrome_test()

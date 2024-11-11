@@ -9,7 +9,7 @@
 # region <data center>
 #
 # Sauce Labs region name, ex. us-west or eu-central.
-region: us-west 
+region: us-west
 
 # tunnel-name <name>
 #
@@ -77,7 +77,7 @@ tunnel-name: docker-compose-tunnel
 # since it minimizes the expensive tunnelled traffic and uses it only for
 # internal domains that are not publicly available. You can specify
 # --tunnel-domains or --direct-domains, but not both.
-tunnel-domains: .saucelabs.com
+#tunnel-domains: .saucelabs.com
 
 # --- Proxy ---
 
@@ -121,7 +121,7 @@ tunnel-domains: .saucelabs.com
 # upstream proxy. Setting this to direct sends requests to localhost directly
 # without using the upstream proxy. By default, requests to localhost are
 # denied.
-#proxy-localhost: deny
+proxy-localhost: allow
 
 # proxy-sauce [protocol://]host[:port]
 #
@@ -218,5 +218,5 @@ tunnel-domains: .saucelabs.com
 # log-level <error|info|debug>
 #
 # Log level.
-log-level: info
+log-level: debug
 

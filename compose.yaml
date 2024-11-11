@@ -1,7 +1,7 @@
 version: "3"
 services:
   test:
-    image: "sminch/tunnel-check:0.1.1"
+    image: "sminch/tunnel-check:0.1.4"
     environment:
       SAUCE_USERNAME: ${SAUCE_USERNAME}
       SAUCE_ACCESS_KEY: ${SAUCE_ACCESS_KEY}
@@ -11,13 +11,24 @@ services:
     volumes: 
       - ./py_files/:/workdir/
 
+  node:
+    image: "sminch/spidey-web:0.0.1"
+    command: "node /opt/app_v2.js"
+    network_mode: host
+    expose:
+      - 5000:5000
+    volumes: 
+      - ./localhost-node/*:/opt/*
+
   sauce-connect:
-    image: "saucelabs/sauce-connect:5.0"
+    image: "saucelabs/sauce-connect:5.1.3"
     environment:
       SAUCE_USERNAME: ${SAUCE_USERNAME}
       SAUCE_ACCESS_KEY: ${SAUCE_ACCESS_KEY}
       SAUCE_OUTPUT_FORMAT: "text"
     command: "run -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -c /opt/sauce-connect.yaml"
     network_mode: host
+    extra_hosts:
+    - "web-store.ps.com:127.0.0.1"
     volumes: 
       - ./sauce-connect.yaml:/opt/sauce-connect.yaml
